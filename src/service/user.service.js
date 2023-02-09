@@ -6,6 +6,12 @@ class UserService {
     const statement = `INSERT INTO user (username, password) VALUES (?, ?)`
     await connection.execute(statement, [username, password])
   }
+
+  async findUserByName(username) {
+    const statement = `SELECT * FROM user WHERE username = ?`
+    const [result] = await connection.execute(statement, [username])
+    return result
+  }
 }
 
 module.exports = new UserService()
