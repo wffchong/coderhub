@@ -1,6 +1,13 @@
-const { NAME_OR_PASSWORD_IS_REQUIRED, PASSWORD_IS_INCORRECT, NAME_IS_NOT_EXISTS } = require('../config/error')
+const {
+  NAME_OR_PASSWORD_IS_REQUIRED,
+  PASSWORD_IS_INCORRECT,
+  NAME_IS_NOT_EXISTS,
+  UNAUTHORIZATION
+} = require('../config/error')
+const { PUBLIC_KEY } = require('../config/secret')
 const userService = require('../service/user.service')
 const md5Password = require('../utils/md5-password')
+const jwt = require('jsonwebtoken')
 
 const verifyLogin = async (ctx, next) => {
   const { username, password } = ctx.request.body
@@ -18,9 +25,38 @@ const verifyLogin = async (ctx, next) => {
   if (user.password !== md5Password(password)) {
     return ctx.app.emit('error', PASSWORD_IS_INCORRECT, ctx)
   }
+
+  // 将用户信息保存下来
+  ctx.user = user
+
   await next()
 }
 
+// 验证是否携带了正确的token
+const verifyAuth = async (ctx, next) => {
+  const authorization = ctx.headers.authorization
+
+  if (!authorization) {
+    return ctx.app.emit('error', UNAUTHORIZATION, ctx)
+  }
+
+  try {
+    // 验证token是否正确
+    const token = authorization.replace('Bearer ', '')
+
+    const result = jwt.verify(token, PUBLIC_KEY, {
+      algorithms: ['RS256']
+    })
+
+    ctx.user = result
+
+    await next()
+  } catch (error) {
+    return ctx.app.emit('error', UNAUTHORIZATION, ctx)
+  }
+}
+
 module.exports = {
-  verifyLogin
+  verifyLogin,
+  verifyAuth
 }

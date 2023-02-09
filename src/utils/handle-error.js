@@ -3,13 +3,13 @@ const {
   NAME_OR_PASSWORD_IS_REQUIRED,
   NAME_IS_ALREADY_EXISTS,
   PASSWORD_IS_INCORRECT,
-  NAME_IS_NOT_EXISTS
+  NAME_IS_NOT_EXISTS,
+  UNAUTHORIZATION
 } = require('../config/error')
 
 app.on('error', (error, ctx) => {
   let code = 0
   let message = ''
-  console.log('error', error)
   switch (error) {
     case NAME_OR_PASSWORD_IS_REQUIRED:
       code = -1001
@@ -26,6 +26,10 @@ app.on('error', (error, ctx) => {
     case PASSWORD_IS_INCORRECT:
       code = -1004
       message = '密码错误，请重新输入'
+      break
+    case UNAUTHORIZATION:
+      code = -1005
+      message = '无效的token或者token已过期'
       break
     default:
       code = -3000
