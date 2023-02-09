@@ -1,9 +1,9 @@
 const KoaRouter = require('@koa/router')
+const { verifyLogin } = require('../middleware/login.middleware')
 
 const loginRouter = new KoaRouter({ prefix: '/login' })
 
-loginRouter.post('/', (ctx, next) => {
-  console.log(ctx.request.body)
+loginRouter.post('/', verifyLogin, (ctx, next) => {
   ctx.body = '登录'
 })
 
