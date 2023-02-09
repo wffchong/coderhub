@@ -13,6 +13,16 @@ class MomentController {
       data: null
     }
   }
+
+  async list(ctx, next) {
+    const { size, offset } = ctx.request.body
+    const result = await momentService.queryList(offset, size)
+    ctx.body = {
+      code: 0,
+      message: '获取成功',
+      data: result
+    }
+  }
 }
 
 module.exports = new MomentController()
