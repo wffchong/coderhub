@@ -7,4 +7,6 @@ momentRouter.post('/', verifyAuth, momentController.create)
 
 momentRouter.get('/', momentController.list)
 
+momentRouter.get('/:momentId', momentController.detail)
+
 module.exports = momentRouter

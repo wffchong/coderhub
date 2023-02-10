@@ -23,6 +23,24 @@ class MomentController {
       data: result
     }
   }
+
+  async detail(ctx, next) {
+    const { momentId } = ctx.params
+    const result = await momentService.queryById(momentId)
+    if (result[0]) {
+      ctx.body = {
+        code: 0,
+        message: '获取成功',
+        data: result[0]
+      }
+    } else {
+      ctx.body = {
+        code: 0,
+        message: '该条动态不存在',
+        data: null
+      }
+    }
+  }
 }
 
 module.exports = new MomentController()
