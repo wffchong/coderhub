@@ -12,4 +12,6 @@ momentRouter.get('/:momentId', momentController.detail)
 
 momentRouter.patch('/:momentId', verifyAuth, verifyPermission, momentController.update)
 
+momentRouter.delete('/:momentId',verifyAuth,verifyPermission ,momentController.remove)
+
 module.exports = momentRouter

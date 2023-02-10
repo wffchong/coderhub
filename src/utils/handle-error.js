@@ -34,7 +34,7 @@ app.on('error', (error, ctx) => {
       break
     case OPERATION_IS_NOT_ALLOWED:
       code = -2001
-      message = '没有权限操作'
+      message = '没有权限操作或者资源不存在'
       break
     default:
       code = -3000
