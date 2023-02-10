@@ -15,6 +15,15 @@ class LabelController {
       return ctx.app.emit('error', LABEL_IS_EXISTS, ctx)
     }
   }
+
+  async list(ctx) {
+    const result = await labelService.list()
+    ctx.body = {
+      code: 0,
+      message: '获取成功',
+      data: result
+    }
+  }
 }
 
 module.exports = new LabelController()
