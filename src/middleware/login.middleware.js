@@ -43,7 +43,6 @@ const verifyAuth = async (ctx, next) => {
   try {
     // 验证token是否正确
     const token = authorization.replace('Bearer ', '')
-
     const result = jwt.verify(token, PUBLIC_KEY, {
       algorithms: ['RS256']
     })
@@ -52,6 +51,7 @@ const verifyAuth = async (ctx, next) => {
 
     await next()
   } catch (error) {
+    console.log('error', error)
     return ctx.app.emit('error', UNAUTHORIZATION, ctx)
   }
 }

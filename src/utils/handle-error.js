@@ -4,7 +4,8 @@ const {
   NAME_IS_ALREADY_EXISTS,
   PASSWORD_IS_INCORRECT,
   NAME_IS_NOT_EXISTS,
-  UNAUTHORIZATION
+  UNAUTHORIZATION,
+  OPERATION_IS_NOT_ALLOWED
 } = require('../config/error')
 
 app.on('error', (error, ctx) => {
@@ -30,6 +31,10 @@ app.on('error', (error, ctx) => {
     case UNAUTHORIZATION:
       code = -1005
       message = '无效的token或者token已过期'
+      break
+    case OPERATION_IS_NOT_ALLOWED:
+      code = -2001
+      message = '没有权限操作'
       break
     default:
       code = -3000
