@@ -10,6 +10,16 @@ class CommentService {
       return Promise.reject(error)
     }
   }
+
+  async replay(momentId, userId, commentId, content) {
+    try {
+      const statement = `INSERT INTO comment (moment_id, user_id, comment_id, content) VALUES (?, ?, ?, ?)`
+      const [result] = await connection.execute(statement, [momentId, userId, commentId, content])
+      return result
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
 }
 
 module.exports = new CommentService()
