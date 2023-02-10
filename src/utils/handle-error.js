@@ -5,12 +5,14 @@ const {
   PASSWORD_IS_INCORRECT,
   NAME_IS_NOT_EXISTS,
   UNAUTHORIZATION,
-  OPERATION_IS_NOT_ALLOWED
+  OPERATION_IS_NOT_ALLOWED,
+  LABEL_IS_EXISTS
 } = require('../config/error')
 
 app.on('error', (error, ctx) => {
   let code = 0
   let message = ''
+  console.log('error', error)
   switch (error) {
     case NAME_OR_PASSWORD_IS_REQUIRED:
       code = -1001
@@ -35,6 +37,10 @@ app.on('error', (error, ctx) => {
     case OPERATION_IS_NOT_ALLOWED:
       code = -2001
       message = '没有权限操作或者资源不存在'
+      break
+    case LABEL_IS_EXISTS:
+      code = -3001
+      message = '标签已存在，请勿重复创建'
       break
     default:
       code = -3000
