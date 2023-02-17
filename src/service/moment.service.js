@@ -24,10 +24,32 @@ class MomentService {
   async queryById(id) {
     const statement = `
       SELECT m.id AS id, m.content as content, m.createAt AS createTime, m.updateAt AS updateTime,
-      JSON_OBJECT('id', u.id, 'username', u.username, 'createTime', u.createAt, 'updateTime', u.updateAt) AS user
+      JSON_OBJECT('id', u.id, 'username', u.username) AS author,
+      (
+        SELECT
+        JSON_ARRAYAGG(
+        JSON_OBJECT(
+          'id', c.id,
+          'content', c.content,
+          'commentId', c.comment_id,
+          'user', JSON_OBJECT('id', cu.id, 'username', cu.username)
+        )
+        )
+        FROM comment AS c
+        LEFT JOIN user AS cu ON c.user_id = cu.id
+        WHERE c.moment_id = m.id
+      ) AS comments,
+      (
+        JSON_ARRAYAGG(
+          JSON_OBJECT('id', l.id, 'name', l.name)
+        )
+      ) AS labels
       FROM moment AS m
       LEFT JOIN user AS u ON u.id = m.user_id
-      WHERE m.id = ?
+      LEFT JOIN moment_label ml ON ml.moment_id = m.id
+      LEFT JOIN label l ON ml.label_id = l.id
+      WHERE m.id = 1
+      GROUP BY m.id
     `
     const [result] = await connection.execute(statement, [id])
     return result
