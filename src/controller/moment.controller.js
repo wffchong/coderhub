@@ -1,3 +1,4 @@
+const labelService = require('../service/label.service')
 const momentService = require('../service/moment.service')
 
 class MomentController {
@@ -64,6 +65,22 @@ class MomentController {
     ctx.body = {
       code: 0,
       message: '删除成功',
+      data: null
+    }
+  }
+
+  async addLabels(ctx) {
+    const { momentId } = ctx.params
+    const labels = ctx.labels
+    for (const label of labels) {
+      const isExist = await momentService.hasLabel(momentId, label.id)
+      if (!isExist) {
+        await momentService.addLabel(momentId, label.id)
+      }
+    }
+    ctx.body = {
+      code: 0,
+      message: '为动态添加标签成功',
       data: null
     }
   }
