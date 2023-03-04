@@ -25,6 +25,16 @@ class MomentController {
     }
   }
 
+  async lastList(ctx, next) {
+    const { num } = ctx.params
+    const result = await momentService.queryLastList(num)
+    ctx.body = {
+      code: 0,
+      message: '获取成功',
+      data: result
+    }
+  }
+
   async detail(ctx, next) {
     const { momentId } = ctx.params
     const result = await momentService.queryById(momentId)

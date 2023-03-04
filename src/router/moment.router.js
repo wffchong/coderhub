@@ -9,6 +9,9 @@ momentRouter.post('/', verifyAuth, momentController.create)
 
 momentRouter.get('/', momentController.list)
 
+// 获取最后 n 条动态
+momentRouter.get('/last/:num', momentController.lastList)
+
 momentRouter.get('/:momentId', momentController.detail)
 
 momentRouter.patch('/:momentId', verifyAuth, verifyPermission, momentController.update)

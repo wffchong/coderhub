@@ -21,6 +21,20 @@ class MomentService {
     return result
   }
 
+  async queryLastList(num) {
+    const statement = `
+    SELECT m.id AS id, m.content as content, m.createAt AS createTime, m.updateAt AS updateTime,
+    JSON_OBJECT('id', u.id, 'username', u.username, 'avatarUrl', u.avatar_url) AS author,
+    (SELECT COUNT(*) FROM comment AS c WHERE m.id = c.moment_id) AS commentCount,
+    (SELECT COUNT(*) FROM moment_label AS ml WHERE m.id = ml.moment_id) AS labelCount
+    FROM moment AS m
+    LEFT JOIN user AS u ON u.id = m.user_id
+    ORDER BY id DESC LIMIT ?
+  `
+    const [result] = await connection.execute(statement, [num])
+    return result
+  }
+
   async queryById(id) {
     const statement = `
       SELECT m.id AS id, m.content as content, m.createAt AS createTime, m.updateAt AS updateTime,
