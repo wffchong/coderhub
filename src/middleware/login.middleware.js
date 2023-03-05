@@ -35,7 +35,6 @@ const verifyLogin = async (ctx, next) => {
 // 验证是否携带了正确的token
 const verifyAuth = async (ctx, next) => {
   const authorization = ctx.headers.authorization
-
   if (!authorization) {
     return ctx.app.emit('error', UNAUTHORIZATION, ctx)
   }

@@ -5,6 +5,7 @@ const PASSWORD_IS_INCORRECT = 'password_is_incorrect'
 const UNAUTHORIZATION = 'unauthorization'
 const OPERATION_IS_NOT_ALLOWED = 'operation_is_not_allowed'
 const LABEL_IS_EXISTS = 'label_is_exists'
+const CATEGORY_IS_EXISTS = 'category_is_exists'
 
 module.exports = {
   NAME_OR_PASSWORD_IS_REQUIRED,
@@ -13,5 +14,6 @@ module.exports = {
   PASSWORD_IS_INCORRECT,
   UNAUTHORIZATION,
   OPERATION_IS_NOT_ALLOWED,
-  LABEL_IS_EXISTS
+  LABEL_IS_EXISTS,
+  CATEGORY_IS_EXISTS
 }

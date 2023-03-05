@@ -6,7 +6,8 @@ const {
   NAME_IS_NOT_EXISTS,
   UNAUTHORIZATION,
   OPERATION_IS_NOT_ALLOWED,
-  LABEL_IS_EXISTS
+  LABEL_IS_EXISTS,
+  CATEGORY_IS_EXISTS
 } = require('../config/error')
 
 app.on('error', (error, ctx) => {
@@ -41,6 +42,10 @@ app.on('error', (error, ctx) => {
     case LABEL_IS_EXISTS:
       code = -3001
       message = '标签已存在，请勿重复创建'
+      break
+    case CATEGORY_IS_EXISTS:
+      code = -3002
+      message = '分类已存在，请勿重复创建'
       break
     default:
       code = -3000
