@@ -15,13 +15,23 @@ class MomentController {
     }
   }
 
-  async list(ctx, next) {
-    const { size, offset } = ctx.request.body
-    const result = await momentService.queryList(offset, size)
+  async list(ctx) {
+    const { pageNum, pageSize } = ctx.request.body
+    console.log('pageNum', pageNum)
+    console.log('pageSize', pageSize)
+
+    const offset = (pageNum - 1) * pageSize
+
+    const result = await momentService.queryList(offset, pageSize)
+    const total = await momentService.queryListTotal()
     ctx.body = {
       code: 0,
       message: '获取成功',
-      data: result
+      data: result,
+      meta: {
+        total,
+        currentPage: pageNum
+      }
     }
   }
 

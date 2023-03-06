@@ -16,6 +16,15 @@ class CategoryController {
       return ctx.app.emit('error', CATEGORY_IS_EXISTS, ctx)
     }
   }
+  async list(ctx) {
+    const result = await categoryService.list()
+
+    ctx.body = {
+      code: 0,
+      message: '获取分类成功',
+      data: result
+    }
+  }
 }
 
 module.exports = new CategoryController()

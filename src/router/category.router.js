@@ -6,6 +6,6 @@ const categoryRouter = new KoaRouter({ prefix: '/category' })
 
 categoryRouter.post('/', verifyAuth, categoryController.create)
 
-// categoryRouter.get('/', commentController.list)
+categoryRouter.get('/', categoryController.list)
 
 module.exports = categoryRouter

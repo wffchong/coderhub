@@ -10,6 +10,12 @@ class CategoryService {
       return Promise.reject(error)
     }
   }
+
+  async list() {
+    const statement = `SELECT * FROM category`
+    const [result] = await connection.execute(statement)
+    return result
+  }
 }
 
 module.exports = new CategoryService()

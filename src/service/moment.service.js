@@ -21,6 +21,12 @@ class MomentService {
     return result
   }
 
+  async queryListTotal() {
+    const statement = `SELECT COUNT(*) AS total FROM moment`
+    const [result] = await connection.execute(statement)
+    return result[0].total
+  }
+
   async queryLastList(num) {
     const statement = `
     SELECT m.id AS id, m.content as content, m.createAt AS createTime, m.updateAt AS updateTime,

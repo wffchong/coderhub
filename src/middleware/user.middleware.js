@@ -24,6 +24,40 @@ const handlePassword = async (ctx, next) => {
   await next()
 }
 
+// 获取验证码
+const handleGetCode = async (ctx, next) => {
+  const { mobile } = ctx.request.body
+  if (!mobile) {
+    return ctx.app.emit('error', NAME_OR_PASSWORD_IS_REQUIRED, ctx)
+  }
+  const users = await userService.findUserByMobile(mobile)
+  if (!users.length) {
+    return ctx.app.emit('error', NAME_OR_PASSWORD_IS_REQUIRED, ctx)
+  }
+  const user = users[0]
+  ctx.body = {
+    code: user.smsCode
+  }
+  await next()
+}
+
+// 短信登录
+const handleSmsLogin = async (ctx, next) => {
+  const { mobile, smsCode } = ctx.request.body
+  if (!mobile || !smsCode) {
+    return ctx.app.emit('error', NAME_OR_PASSWORD_IS_REQUIRED, ctx)
+  }
+  const users = await userService.findUserByMobile(mobile)
+  if (!users.length) {
+    return ctx.app.emit('error', NAME_OR_PASSWORD_IS_REQUIRED, ctx)
+  }
+  const user = users[0]
+  if (user.smsCode !== smsCode) {
+    return ctx.app.emit('error', NAME_OR_PASSWORD_IS_REQUIRED, ctx)
+  }
+  await next()
+}
+
 module.exports = {
   verifyUser,
   handlePassword
