@@ -9,7 +9,7 @@ userRouter.post('/', verifyUser, handlePassword, userController.create)
 userRouter.get('/avatar/:userId', userController.showAvatarImage)
 
 userRouter.post('/smsCode', (ctx, next) => {
-  console.log('ctx.request.body', ctx.request.body)
+  // console.log('ctx.request.body', ctx.request.body)
 })
 
 userRouter.post('/phoneLogin', (ctx, next) => {})
