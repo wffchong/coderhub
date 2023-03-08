@@ -16,7 +16,7 @@ class MomentController {
   }
 
   async list(ctx) {
-    const { pageNum, pageSize } = ctx.request.body
+    const { pageNum, pageSize } = ctx.request.query
 
     const offset = (pageNum - 1) * pageSize
 
@@ -28,7 +28,7 @@ class MomentController {
       data: result,
       meta: {
         total,
-        currentPage: pageNum
+        currentPage: +pageNum
       }
     }
   }
