@@ -17,8 +17,6 @@ class MomentController {
 
   async list(ctx) {
     const { pageNum, pageSize } = ctx.request.body
-    console.log('pageNum', pageNum)
-    console.log('pageSize', pageSize)
 
     const offset = (pageNum - 1) * pageSize
 
