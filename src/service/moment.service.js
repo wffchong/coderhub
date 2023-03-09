@@ -9,7 +9,7 @@ class MomentService {
 
   async queryList(offset = 0, size = 10) {
     const statement = `
-    SELECT m.id AS id, m.content as content, m.createAt AS createTime, m.updateAt AS updateTime,
+    SELECT m.id AS id, m.title AS title, m.content as content, m.viewCount AS viewCount, m.createAt AS createTime, m.updateAt AS updateTime,
       JSON_OBJECT('id', u.id, 'username', u.username, 'avatarUrl', u.avatar_url) AS author,
       (
         JSON_ARRAYAGG(
@@ -42,7 +42,7 @@ class MomentService {
 
   async queryLastList(num) {
     const statement = `
-    SELECT m.id AS id, m.content as content, m.createAt AS createTime, m.updateAt AS updateTime,
+    SELECT m.id AS id, m.title AS title, m.content as content, m.viewCount AS viewCount, m.createAt AS createTime, m.updateAt AS updateTime,
       JSON_OBJECT('id', u.id, 'username', u.username, 'avatarUrl', u.avatar_url) AS author,
       (
         JSON_ARRAYAGG(
@@ -68,7 +68,7 @@ class MomentService {
 
   async queryById(id) {
     const statement = `
-      SELECT m.id AS id, m.content as content, m.createAt AS createTime, m.updateAt AS updateTime,
+      SELECT m.id AS id, m.title AS title, m.content as content, m.viewCount AS viewCount, m.createAt AS createTime, m.updateAt AS updateTime,
       JSON_OBJECT('id', u.id, 'username', u.username, 'avatarUrl', u.avatar_url) AS author,
       (
         SELECT
