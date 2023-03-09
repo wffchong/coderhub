@@ -26,6 +26,7 @@ const verifyLogin = async (ctx, next) => {
     return ctx.app.emit('error', PASSWORD_IS_INCORRECT, ctx)
   }
 
+  console.log('user', user)
   // 将用户信息保存下来
   ctx.user = user
 
