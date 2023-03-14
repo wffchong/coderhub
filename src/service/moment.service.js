@@ -103,6 +103,9 @@ class MomentService {
 
     result.forEach(item => {
       item.labels = item.labels.filter(label => label.id)
+      if (!item.comments) {
+        item.comments = []
+      }
     })
 
     return result
