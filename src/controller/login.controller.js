@@ -12,6 +12,7 @@ class LoginController {
 
     ctx.body = {
       code: 0,
+      message: '登录成功',
       data: {
         username,
         token,

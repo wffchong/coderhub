@@ -21,7 +21,9 @@ class LabelController {
     ctx.body = {
       code: 0,
       message: '获取成功',
-      data: result
+      data: {
+        list: result
+      }
     }
   }
 }

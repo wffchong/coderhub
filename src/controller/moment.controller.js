@@ -25,10 +25,12 @@ class MomentController {
     ctx.body = {
       code: 0,
       message: '获取成功',
-      data: result,
-      meta: {
-        total,
-        currentPage: +pageNum
+      data: {
+        list: result,
+        meta: {
+          total,
+          currentPage: +pageNum
+        }
       }
     }
   }
@@ -39,7 +41,9 @@ class MomentController {
     ctx.body = {
       code: 0,
       message: '获取成功',
-      data: result
+      data: {
+        list: result
+      }
     }
   }
 

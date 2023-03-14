@@ -22,7 +22,9 @@ class CategoryController {
     ctx.body = {
       code: 0,
       message: '获取分类成功',
-      data: result
+      data: {
+        list: result
+      }
     }
   }
 }
