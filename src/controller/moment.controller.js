@@ -19,7 +19,6 @@ class MomentController {
     const { pageNum, pageSize } = ctx.request.query
 
     const offset = (pageNum - 1) * pageSize
-
     const result = await momentService.queryList(offset, pageSize)
     const total = await momentService.queryListTotal()
     ctx.body = {

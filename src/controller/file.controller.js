@@ -1,6 +1,7 @@
 const fileService = require('../service/file.service')
 const userService = require('../service/user.service')
 const { SERVER_PORT, SERVER_HOST } = require('../config/server')
+const { uploadToken } = require('../config/qiniu')
 
 class FileController {
   async create(ctx) {
@@ -18,6 +19,14 @@ class FileController {
       code: 0,
       message: '上传头像成功',
       data: null
+    }
+  }
+
+  async getUploadToken(ctx) {
+    ctx.body = {
+      code: 0,
+      message: '获取token成功',
+      data: uploadToken
     }
   }
 }

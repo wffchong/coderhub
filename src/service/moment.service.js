@@ -9,7 +9,7 @@ class MomentService {
 
   async queryList(offset = 0, size = 10) {
     const statement = `
-    SELECT m.id AS id, m.title AS title, m.content AS content, category.name AS categoryName, m.viewCount AS viewCount, m.createAt AS createTime, m.updateAt AS updateTime,
+    SELECT m.id AS id, m.title AS title, m.content AS content, m.viewCount AS viewCount, m.createAt AS createTime, m.updateAt AS updateTime,
       JSON_OBJECT('id', u.id, 'username', u.username, 'avatarUrl', u.avatar_url) AS author,
       (
         JSON_ARRAYAGG(
@@ -21,11 +21,10 @@ class MomentService {
     LEFT JOIN user AS u ON u.id = m.user_id
     LEFT JOIN moment_label AS ml ON ml.moment_id = m.id
     LEFT JOIN label l ON ml.label_id = l.id
-    LEFT JOIN category ON category.id = m.category_id
+
     GROUP BY m.id
     LIMIT ? OFFSET ?
     `
-
     const [result] = await connection.execute(statement, [String(size), String(offset)])
 
     result.forEach(item => {
@@ -43,7 +42,7 @@ class MomentService {
 
   async queryLastList(num) {
     const statement = `
-    SELECT m.id AS id, m.title AS title, m.content as content, category.name AS categoryName, m.viewCount AS viewCount, m.createAt AS createTime, m.updateAt AS updateTime,
+    SELECT m.id AS id, m.title AS title, m.content as content, m.viewCount AS viewCount, m.createAt AS createTime, m.updateAt AS updateTime,
       JSON_OBJECT('id', u.id, 'username', u.username, 'avatarUrl', u.avatar_url) AS author,
       (
         JSON_ARRAYAGG(
@@ -55,7 +54,6 @@ class MomentService {
     LEFT JOIN user AS u ON u.id = m.user_id
     LEFT JOIN moment_label AS ml ON ml.moment_id = m.id
     LEFT JOIN label l ON ml.label_id = l.id
-    LEFT JOIN category ON category.id = m.category_id
     GROUP BY m.id
     ORDER BY id DESC LIMIT ?
   `
@@ -70,7 +68,7 @@ class MomentService {
 
   async queryById(id) {
     const statement = `
-      SELECT m.id AS id, m.title AS title, m.content as content, category.name AS categoryName, m.viewCount AS viewCount, m.createAt AS createTime, m.updateAt AS updateTime,
+      SELECT (m.id AS id, m.title AS title, m.content as content, m.viewCount AS viewCount, m.createAt AS createTime, m.updateAt AS updateTime,
       JSON_OBJECT('id', u.id, 'username', u.username, 'avatarUrl', u.avatar_url) AS author,
       (
         SELECT
@@ -90,12 +88,11 @@ class MomentService {
         JSON_ARRAYAGG(
           JSON_OBJECT('id', l.id, 'name', l.name)
         )
-      ) AS labels
-      FROM moment AS m
+      ) AS labels)
+      FROM (moment AS m)
       LEFT JOIN user AS u ON u.id = m.user_id
       LEFT JOIN moment_label ml ON ml.moment_id = m.id
       LEFT JOIN label l ON ml.label_id = l.id
-      LEFT JOIN category ON category.id = m.category_id
       WHERE m.id = ?
       GROUP BY m.id
     `
