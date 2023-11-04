@@ -4,9 +4,8 @@ const momentService = require('../service/moment.service')
 class MomentController {
   async create(ctx, next) {
     const { id } = ctx.user
-    const { content } = ctx.request.body
-
-    await momentService.create(content, id)
+    const { content, title, categoryId } = ctx.request.body
+    await momentService.create(content, title, categoryId, id)
 
     ctx.body = {
       code: 0,
