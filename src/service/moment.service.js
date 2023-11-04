@@ -1,9 +1,9 @@
 const connection = require('../app/database')
 
 class MomentService {
-  async create(content, userId) {
-    const statement = `INSERT INTO moment (content, user_id) VALUES (?, ?)`
-    const [result] = await connection.execute(statement, [content, userId])
+  async create(content, title, category_id, userId) {
+    const statement = `INSERT INTO moment (content, title, category_id, user_id) VALUES (?, ?, ?, ?)`
+    const [result] = await connection.execute(statement, [content, title, category_id, userId])
     return result
   }
 
@@ -23,6 +23,7 @@ class MomentService {
     LEFT JOIN label l ON ml.label_id = l.id
     LEFT JOIN category ON category.id = m.category_id
     GROUP BY m.id
+    ORDER BY id DESC
     LIMIT ? OFFSET ?
     `
 

@@ -3,6 +3,7 @@
     "ARRAYAGG",
     "bodyparser",
     "coderhub",
+    "qiniu",
     "unauthorization"
   ]
 }

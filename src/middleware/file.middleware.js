@@ -7,4 +7,6 @@ const uploadAvatar = multer({
 
 const handleAvatar = uploadAvatar.single('avatar')
 
-module.exports = { handleAvatar }
+const handlePicture = uploadAvatar.single('picture')
+
+module.exports = { handleAvatar, handlePicture }
